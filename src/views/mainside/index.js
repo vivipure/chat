@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import store from '../../store'
+import { changeContentShow } from '../../store/actionType'
 
 import Search from '../../component/search'
 import UserBox from '../../component/userbox'
@@ -45,9 +47,21 @@ class MainSide extends Component {
                     chatTime: '12:05',
                     avator: 'http://bit.ly/2w0kAKb'
                 }
-            ]
+            ],
+            ...store.getState()
         }
+        store.subscribe(this.storeChange)
+    }
+    showItem= (id) => {
+        if (this.state.mode === 'phone') {
+            const action = changeContentShow(true)
+            store.dispatch(action)
+        }
+        console.log(this.state.mode, this.state.contentShow )
 
+    }
+    storeChange = () => {
+        this.setState(store.getState())
     }
     render() {
         return (
@@ -83,7 +97,7 @@ class MainSide extends Component {
                             {
                                 this.state.chatitems.map(item => {
                                     return (
-                                        <ChatItem userName={ item.userName } status={ item.status } unReadNum={ item.unReadNum } lastChat={ item.lastChat } chatTime={ item.chatTime } avator={item.avator} key={item.id}/>
+                                        <ChatItem userName={ item.userName } status={ item.status } unReadNum={ item.unReadNum } lastChat={ item.lastChat } chatTime={ item.chatTime } avator={item.avator} param={item.id} key={item.id} onClick={this.showItem} />
                                     )
                                 })
                             }

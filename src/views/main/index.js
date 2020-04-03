@@ -11,13 +11,9 @@ class MainFrame extends Component {
         this.state = {
         }
     }
-    onRef= (ref) => {
-        console.log(ref)
-        this.child = ref
-    }
+
     showInfo= ()=> {
-        console.log(7676777)
-        this.child.changeOpen()
+        this.refs.childRef.changeOpen()
     }
     render() {
         return (
@@ -25,7 +21,7 @@ class MainFrame extends Component {
                 <section className="main-grid"> 
                     <MainSide /> 
                     <MainContent showInfo={this.showInfo}/> 
-                    <InfoSide onRef={this.onRef} />
+                    <InfoSide ref='childRef' />
                 </section>
 
             </div>

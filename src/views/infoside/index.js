@@ -8,9 +8,8 @@ class InfoSide extends Component {
         }
     }
     changeOpen() {
-        console.log(11)
          this.setState({
-            open: false
+            open: !this.state.open
         })
     }
     render() {

@@ -427,7 +427,10 @@ html {
         top: 0;
         bottom: 0;
         width: 100%;
-        transition: transform 0.4s;
+        transition: all 0.4s ease-in-out;
+        &.show-content {
+            #{$end-direction}: 0;
+        }
     }
   
 }

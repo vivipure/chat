@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 
 
 class ChatItem extends Component {
+    showItemDetail= ()=> {
+        this.props.onClick(this.props.param)
+    }
     render() {
         const userName = this.props.userName
         const avator = this.props.avator
@@ -13,7 +16,7 @@ class ChatItem extends Component {
         const unReadNum = this.props.unReadNum
         return (
             <Fragment>
-                <li className="chats-item">
+                <li className="chats-item" onClick={ this.showItemDetail }>
                     <div className="chats-item-button js-chat-button" role="button">
                         <img className="profile-image" src={ avator } alt={ userName } />
                         <header className="chats-item-header">
@@ -26,12 +29,6 @@ class ChatItem extends Component {
                                 <li className="chats-item-info-item">
                                     <span className={notNotice ? 'icon-silent':unReadNum?'unread-messsages':''}>{notNotice || unReadNum || ''}</span>
                                 </li>
-                                {/* <li className="chats-item-info-item">
-                                    <span className="icon-silent">🔇</span>
-                                </li>
-                                <li className="chats-item-info-item">
-                                    <span className="unread-messsages">{{ unReadNum }}</span>
-                                </li> */}
                             </ul>
                         </div>
                     </div>            

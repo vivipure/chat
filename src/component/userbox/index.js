@@ -1,12 +1,15 @@
 import React, { Component, Fragment  } from 'react'
 import PropTypes from 'prop-types'
 
+import { changeContentShow } from '../../store/actionType'
+import store from '../../store'
+
+
 class UserBox extends Component {
-    // constructor(props) {
-    //     super(props)
-    //     this.state = {
-    //     }
-    // }
+    back = () => {
+        const action = changeContentShow(false)
+        store.dispatch(action)
+    }
     render() {
         const userName = this.props.userName
         const status = this.props.status
@@ -18,7 +21,7 @@ class UserBox extends Component {
                 <div className="common-header-start">  
                             {
                                 type === 'normal' ?
-                                <button className="common-button is-only-mobile u-margin-end js-back">
+                                <button className="common-button is-only-mobile u-margin-end js-back" onClick={this.back}>
                                     <span className="icon icon-back">⬅</span>
                                 </button> : ''
                             }
