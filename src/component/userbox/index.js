@@ -12,6 +12,7 @@ class UserBox extends Component {
         const status = this.props.status
         const avator = this.props.avator || 'http://bit.ly/37SNAl8'
         const type = this.props.type
+        const show = this.props.showInfo
         return (
             <Fragment>
                 <div className="common-header-start">  
@@ -21,7 +22,7 @@ class UserBox extends Component {
                                     <span className="icon icon-back">⬅</span>
                                 </button> : ''
                             }
-                            <button className={ type === 'normal' ? 'u-flex js-side-info-button':'u-flex js-user-nav' }>
+                            <button className={ type === 'normal' ? 'u-flex js-side-info-button':'u-flex js-user-nav' } onClick={ show }>
                                 <img className="profile-image" src={ avator } alt={ userName } />
                                 <div className="common-header-content">
                                 <h2 className="common-header-title">{ userName }</h2>
