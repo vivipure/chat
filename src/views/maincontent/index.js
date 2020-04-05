@@ -5,7 +5,7 @@ import store from '../../store'
 import ChatContent from '../chatcontent'
 import UserBox from '../../component/userbox'
 
-
+const img1 = require('../../icons/avator_1.jpg')
 
 class MainContent extends Component {
     constructor(props) {
@@ -25,7 +25,7 @@ class MainContent extends Component {
         return (
             <main className={ this.state.contentShow === true ? "main-content show-content":"main-content" }>
                         <header className="common-header">
-                            <UserBox userName='啊这波肉蛋葱鸡' status="online" showInfo={ this.showInfo } />
+                            <UserBox userName='肉蛋冲击' status="online" avator={img1} showInfo={ this.showInfo } />
                             <nav className="common-nav">
                                 <ul className="common-nav-list">
                                     <li className="common-nav-item">

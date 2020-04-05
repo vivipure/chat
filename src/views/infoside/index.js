@@ -4,7 +4,7 @@ class InfoSide extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            open: true
+            open: false
         }
     }
     changeOpen() {
@@ -14,7 +14,7 @@ class InfoSide extends Component {
     }
     render() {
         return (
-             <aside className={this.state.open ? 'main-info':'main-info u-hide u-hide' }>    
+             <aside className={this.state.open ? 'main-info':'main-info u-hide' }>    
                         <header className="common-header">
                             <button className="common-button js-close-main-info" onClick={this.changeOpen.bind(this)}>
                                 <span className="icon">❌</span>

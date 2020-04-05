@@ -7,6 +7,13 @@ import UserBox from '../../component/userbox'
 import ChatItem from '../../component/chatitem'
 
 
+// img
+const img1 = require('../../icons/avator_1.jpg')
+const img2 = require('../../icons/avator_2.jpg')
+const img3 = require('../../icons/avator_3.jpg')
+const img4 = require('../../icons/avator_4.jpg')
+const img5 = require('../../icons/avator_5.jpg')
+
 class MainSide extends Component {
     constructor(props) {
         super(props)
@@ -19,6 +26,7 @@ class MainSide extends Component {
                     chatTime: '2020/12/02',
                     id: 1,
                     unReadNum: 2,
+                    avator: img1
                 },
                 {
                     id: 4,
@@ -27,7 +35,7 @@ class MainSide extends Component {
                     unReadNum: 2,
                     lastChat: '我还是忘不了你。。',
                     chatTime: '12:05',
-                    avator: 'http://bit.ly/37RrfUp'
+                    avator: img2
                 },
                 {
                     id: 5,
@@ -36,7 +44,7 @@ class MainSide extends Component {
                     unReadNum: 10,
                     lastChat: 'See you at Yerucham!',
                     chatTime: '12:05',
-                    avator: 'http://bit.ly/3c1CvRe'
+                    avator: img3
                 },
                 {
                     id: 6,
@@ -45,7 +53,7 @@ class MainSide extends Component {
                     unReadNum: 0,
                     lastChat: '仙人抚我顶，很顶',
                     chatTime: '12:05',
-                    avator: 'http://bit.ly/2w0kAKb'
+                    avator: img4
                 }
             ],
             ...store.getState()
@@ -57,18 +65,21 @@ class MainSide extends Component {
             const action = changeContentShow(true)
             store.dispatch(action)
         }
-        console.log(this.state.mode, this.state.contentShow )
-
     }
     storeChange = () => {
         this.setState(store.getState())
     }
+    back = () => {
+        this.props.login()
+    }
     render() {
+        console.log(this.props)
+
         return (
                 <aside className="main-side">
                    <header className="common-header">
-                        <div className="common-header-start">
-                            <UserBox userName='啊这波肉蛋葱鸡' avator="http://bit.ly/3b6qNEw" type="main" />
+                        <div className="common-header-start" onClick={ this.back }>
+                            <UserBox userName='啊这波肉蛋葱鸡' avator={img5} type="main" />
                         </div>
                         <nav className="common-nav">
                             <ul className="common-nav-list">

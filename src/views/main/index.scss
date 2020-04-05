@@ -72,8 +72,8 @@ body {
 
 /* background */
 html {
-    background: linear-gradient(to bottom, var(--dark-green) 1px, var(--dark-green) 130px, #dddbd1 131px, #d2dbdc 100%);
-    background-repeat: no-repeat;
+    // background: linear-gradient(to bottom, var(--dark-green) 1px, var(--dark-green) 130px, #dddbd1 131px, #d2dbdc 100%);
+    // background-repeat: no-repeat;
     min-height: 100vh;
 }
 
@@ -439,7 +439,7 @@ html {
     @include scroll();
     flex: 1;
     background-color: #e5ddd5;
-
+    overflow-x: hidden;
     &-list {
         display: flex;
         flex-direction: column;
@@ -646,6 +646,19 @@ html {
     .common-header {
         border-#{$start-direction}: solid 1px var(--common-header-border-color);
     }
+
+    @media #{$break1} {
+        width: 100%;
+        position: fixed;
+        right: 0;
+        transition: .3s;
+        top: 0;
+        &.u-hide {
+            display: flex !important;
+            right: 100%;
+        }
+    }
+
 
     &-content {
         @include scroll();

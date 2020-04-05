@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 
+import TextBlock from '../../component/textblock'
+
 class ChatContent extends Component {
     render() {
+        const long = `
+        I’m Elad Shechter, a Web Developer specializing in CSS & HTML design and architecture.<br/><br/>
+        Woking as a CSS Architect and evangelist at <a href="https://animaapp.com" target="_blank">AnimaApp.com</a>.<br/><br/>
+
+        A bit more about myself:<br/>
+        - Writer of various globally known CSS articles<br/>
+        - CSS speaker.<br/>
+        - Founder of CSS Masters Israel Community<br/><br/>
+
+        You can see more of my stuff on my website <a href="https://eladsc.com/" tarhet="_blank">eladsc.com</a>
+        `
         return (
             <div className="messanger">
                         <ol className="messanger-list">
@@ -10,49 +23,13 @@ class ChatContent extends Component {
                                 Today
                             </p>          
                             </li>
-                            <li className="common-message is-you">
-                            <p className="common-message-content">
-                                This is my CSS/HTML Revers Engineering for WhatsApp
-                            </p>
-                            <span className="status is-seen">✔️✔️</span>
-                            <time datetime>14:11</time>
-                            </li>
-                            <li className="common-message is-you">
-                            <p className="common-message-content">
-                                Just take a look
-                            </p>
-                            <span className="status is-seen">✔️✔️</span>
-                            <time datetime>14:12</time>
-                            </li> 
-                            <li className="common-message is-other">        
-                            <p className="common-message-content">
-                                Who are you?
-                            </p>
-                            <time datetime>14:33</time>          
-                            </li>
-                            <li className="common-message is-you">        
-                            <p className="common-message-content">            
-                                I’m Elad Shechter, a Web Developer specializing in CSS & HTML design and architecture.<br/><br/>
-                                Woking as a CSS Architect and evangelist at <a href="https://animaapp.com" target="_blank">AnimaApp.com</a>.<br/><br/>
-
-                                A bit more about myself:<br/>
-                                - Writer of various globally known CSS articles<br/>
-                                - CSS speaker.<br/>
-                                - Founder of CSS Masters Israel Community<br/><br/>
-
-                                You can see more of my stuff on my website <a href="https://eladsc.com/" tarhet="_blank">eladsc.com</a>
-                            
-                            </p>
-                            <span className="status is-seen">✔️✔️</span>
-                            <time datetime>14:41</time>
-                            </li>
-                            <li className="common-message is-other">        
-                            <p className="common-message-content">
-                                Who's those peoples on the contact list?
-                            </p>
-                            <time datetime>14:33</time>          
-                            </li>
-                            <li className="common-message is-you">        
+                            <TextBlock text='This is my CSS/HTML Revers Engineering for WhatsApp' type="you" isSeen={true} time="14:11" />
+                            <TextBlock text='Just take a look' type="you" isSeen={true} time="14:12" />
+                            <TextBlock text='Who are you?' type="other" isSeen={true} time="14:33" />
+                            <TextBlock text={ long } type="you" isSeen={false} time="14:41" />
+                            <TextBlock text="Who's those peoples on the contact list?" type="other" isSeen={true} time="14:43" />
+                          
+                            {/* <li className="common-message is-you">        
                             <p className="common-message-content">
                                 These are friends from our comunity "<a href="https://www.facebook.com/groups/css.masters.israel/" target="_blank">CSS Masters Israel</a>".<br/>
                                 Beside it we have anoather global comunity channel, called" 
@@ -76,7 +53,7 @@ class ChatContent extends Component {
                             </p>
                             <span className="status">✔️</span>
                             <time datetime>14:43</time>
-                            </li>
+                            </li> */}
                         </ol>
                         </div>  
         )
