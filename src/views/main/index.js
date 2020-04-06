@@ -14,7 +14,6 @@ class MainFrame extends Component {
         this.state = {
         }
     }
-
     showInfo= ()=> {
         this.refs.childRef.changeOpen()
     }
