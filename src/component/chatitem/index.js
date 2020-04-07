@@ -40,7 +40,7 @@ class ChatItem extends Component {
 
 ChatItem.propTypes = {
     userName: PropTypes.string,
-    status: PropTypes.string,
+    status: PropTypes.bool,
     avator: PropTypes.string,
     lastChat: PropTypes.string
 }

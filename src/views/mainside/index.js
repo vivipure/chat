@@ -7,6 +7,8 @@ import UserBox from '../../component/userbox'
 import ChatItem from '../../component/chatitem'
 
 
+import request from '../../utils/request'
+
 // img
 const img1 = require('../../icons/avator_1.jpg')
 const img2 = require('../../icons/avator_2.jpg')
@@ -18,44 +20,45 @@ class MainSide extends Component {
     constructor(props) {
         super(props)
         this.state = {
-             chatitems:  [
-                {
-                    userName: '肉蛋冲击',
-                    status: 'not',
-                    lastChat: '我对不起你啊，呜呜呜呜',
-                    chatTime: '2020/12/02',
-                    id: 1,
-                    unReadNum: 2,
-                    avator: img1
-                },
-                {
-                    id: 4,
-                    userName: '基希卡',
-                    status: '',
-                    unReadNum: 2,
-                    lastChat: '我还是忘不了你。。',
-                    chatTime: '12:05',
-                    avator: img2
-                },
-                {
-                    id: 5,
-                    userName: '罗伯特.强哥',
-                    status: '',
-                    unReadNum: 10,
-                    lastChat: 'See you at Yerucham!',
-                    chatTime: '12:05',
-                    avator: img3
-                },
-                {
-                    id: 6,
-                    userName: '一代大侠',
-                    status: '',
-                    unReadNum: 0,
-                    lastChat: '仙人抚我顶，很顶',
-                    chatTime: '12:05',
-                    avator: img4
-                }
-            ],
+            chatitems: [],
+            //  chatitems:  [
+            //     {
+            //         userName: '肉蛋冲击',
+            //         status: 'not',
+            //         lastChat: '我对不起你啊，呜呜呜呜',
+            //         chatTime: '2020/12/02',
+            //         id: 1,
+            //         unReadNum: 2,
+            //         avator: img1
+            //     },
+            //     {
+            //         id: 4,
+            //         userName: '基希卡',
+            //         status: '',
+            //         unReadNum: 2,
+            //         lastChat: '我还是忘不了你。。',
+            //         chatTime: '12:05',
+            //         avator: img2
+            //     },
+            //     {
+            //         id: 5,
+            //         userName: '罗伯特.强哥',
+            //         status: '',
+            //         unReadNum: 10,
+            //         lastChat: 'See you at Yerucham!',
+            //         chatTime: '12:05',
+            //         avator: img3
+            //     },
+            //     {
+            //         id: 6,
+            //         userName: '一代大侠',
+            //         status: '',
+            //         unReadNum: 0,
+            //         lastChat: '仙人抚我顶，很顶',
+            //         chatTime: '12:05',
+            //         avator: img4
+            //     }
+            // ],
             ...store.getState()
         }
         store.subscribe(this.storeChange)
@@ -66,6 +69,18 @@ class MainSide extends Component {
             store.dispatch(action)
         }
     }
+    // 组件挂载完成时被执行
+    componentDidMount() {
+        request({
+            url: '/group/list',
+            method: 'get'
+        }).then(res => {
+            this.setState({
+                chatitems: res.data
+            })
+        })
+
+    }
     storeChange = () => {
         this.setState(store.getState())
     }
@@ -73,8 +88,6 @@ class MainSide extends Component {
         this.props.login()
     }
     render() {
-        console.log(this.props)
-
         return (
                 <aside className="main-side">
                    <header className="common-header">
@@ -108,7 +121,8 @@ class MainSide extends Component {
                             {
                                 this.state.chatitems.map(item => {
                                     return (
-                                        <ChatItem userName={ item.userName } status={ item.status } unReadNum={ item.unReadNum } lastChat={ item.lastChat } chatTime={ item.chatTime } avator={item.avator} param={item.id} key={item.id} onClick={this.showItem} />
+                                        // <ChatItem userName={ item.groupName } status={ item.status } unReadNum={ item.unReadNum } lastChat={ item.lastChat } chatTime={ item.chatTime } avator={item.avator} param={item.id} key={item.id} onClick={this.showItem} />
+                                        <ChatItem userName={ item.groupName } status={ false } unReadNum={ 0 } lastChat={ 'item.lastChat' } chatTime={ new Date().toLocaleDateString() } avator={item.groupIcon} param={item._id} key={item._id} onClick={this.showItem} />
                                     )
                                 })
                             }

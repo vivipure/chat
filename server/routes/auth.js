@@ -31,7 +31,7 @@ router.post('/register', async (req, res) => {
         password: hashPassword
     })
     try {
-        const saveUser = await user.save()
+        await user.save()
         res.send({
             user: user._id,
             msg: '创建成功'
@@ -62,13 +62,7 @@ router.post('/login', async (req, res) => {
             expiresIn: 60*60*24  // 1天过期
     })
     res.header('auth-token', token).send(token)
-
-    try {
-        const saveUser = await user.save()
-        res.send(saveUser)
-    }catch(err) {
-        res.status(400).send(err)
-    }
+    
 })
 
 

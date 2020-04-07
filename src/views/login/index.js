@@ -139,7 +139,7 @@ class Demo extends Component {
                     </div>
                     <button disabled={this.state.disabled} onClick={ this.loginBtn }>
                         <svg viewBox="0 0 16 16">
-                            <circle stroke-opacity=".1" cx="8" cy="8" r="6"></circle>
+                            <circle strokeOpacity=".1" cx="8" cy="8" r="6"></circle>
                             <circle className="load" cx="8" cy="8" r="6"></circle>
                         </svg>
                         <span>Submit</span>

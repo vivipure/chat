@@ -21,6 +21,14 @@ const userSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    age: {
+        type: Number,
+        default: 18
+    },
+    gender: {
+        type: String,
+        default: '未知'
     }
 })
 
