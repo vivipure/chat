@@ -20,16 +20,18 @@ class MainFrame extends Component {
     goLogin = () => {
         this.props.history.push('/login')
     }
+    showContent = () => {
+        this.refs.main.getRoomDetail()
+    }
     render() {
         return (
             <div>
                 <section className="main-grid"> 
-                    <MainSide login={ this.goLogin } /> 
-                    <MainContent showInfo={this.showInfo}/> 
-                    <InfoSide ref='childRef' />
+                    <MainSide login={ this.goLogin } showContent={this.showContent} /> 
+                    <MainContent showInfo={this.showInfo} ref="main" /> 
+                    <InfoSide ref='childRef'  />
                 </section> 
             </div>
-
         )
     }
 }

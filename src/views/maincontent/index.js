@@ -18,7 +18,8 @@ class MainContent extends Component {
             userName: '',
             avator: '',
             chatList: [],
-            socket: '',
+            sockets: [],
+            groupList:[],
             ...store.getState()
         }
         store.subscribe(this.storeChange)
@@ -28,7 +29,6 @@ class MainContent extends Component {
     }
     storeChange = async () => {
         await this.setState(store.getState())
-        await this.getRoomDetail()
     }
     getRoomDetail = async () => {
         if (this.state.chat_room === 0) return
@@ -47,28 +47,46 @@ class MainContent extends Component {
                 chatList: chat,
             })
         })
-        this.chat()
+        if (this.state.chat_room in this.state.groupList) {
+            console.log('你已经连过这个房间了')
+            // 找到此连接
+            let socket = this.state.sockets.find(item => item.groupId === this.state.chat_room)
+            await socket.socket.emit('join', {
+                name: this.state.tempUser,
+                room: this.state.chat_room
+            })
+        }else {
+            this.chat()
+
+        }
          
     }
-    chat = () => {
-        const socket = io('http://localhost:52000')
+    chat = async () => {
+        const socket = await io('http://localhost:52000')
         // 组件保存socket
-        this.setState({
-            socket
-        })
-        // 连接
-        socket.on('connect', ()=> {
+        await this.setState({
+            sockets: this.state.sockets.concat([{
+                groupId: this.state.chat_room,
+                socket: socket
+            }]),
+            groupList: this.state.groupList.concat([this.state.chat_room])
         })
         
+
+        // 连接
+        await socket.on('connect', ()=> {
+        })
         // 加入群组房间 
-        socket.emit('join', { 
+        await socket.emit('join', { 
              name: this.state.tempUser,
              room: this.state.chat_room
           }, (error) => {
             if(error) {
-                alert(error);
+                console.log(error);
             }
         })
+
+
         socket.on('message', message => {
             console.log(message)
             let temp = this.state.chatList.slice()
@@ -81,7 +99,8 @@ class MainContent extends Component {
     sendMessage = () => {
         let content = this.refs.messagebox.innerHTML
         if(content) {
-            this.state.socket.emit('sendMessage',content)
+            let socket = this.state.sockets.find(item => item.groupId === this.state.chat_room)
+           socket.socket.emit('sendMessage',content)
             this.refs.messagebox.innerHTML = ''
         }
     }

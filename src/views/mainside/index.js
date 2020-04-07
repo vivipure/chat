@@ -29,14 +29,14 @@ class MainSide extends Component {
         }
         store.subscribe(this.storeChange)
     }
-    showItem = (id) => {
+    showItem = async (id) => {
         if (this.state.mode === 'phone') {
             const action = changeContentShow(true)
             store.dispatch(action)
         }
         let action = setChatRoom(id)
-        store.dispatch(action)
-
+        await store.dispatch(action)
+        this.props.showContent()
     }
     // 组件挂载完成时被执行
     componentDidMount() {
