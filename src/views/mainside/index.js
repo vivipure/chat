@@ -5,69 +5,38 @@ import { changeContentShow } from '../../store/actionType'
 import Search from '../../component/search'
 import UserBox from '../../component/userbox'
 import ChatItem from '../../component/chatitem'
+import { setChatRoom}  from '../../store/actionType'
 
 
 import request from '../../utils/request'
 
 // img
-const img1 = require('../../icons/avator_1.jpg')
-const img2 = require('../../icons/avator_2.jpg')
-const img3 = require('../../icons/avator_3.jpg')
-const img4 = require('../../icons/avator_4.jpg')
+// const img1 = require('../../icons/avator_1.jpg')
+// const img2 = require('../../icons/avator_2.jpg')
+// const img3 = require('../../icons/avator_3.jpg')
+// const img4 = require('../../icons/avator_4.jpg')
 const img5 = require('../../icons/avator_5.jpg')
+
+
+
 
 class MainSide extends Component {
     constructor(props) {
         super(props)
         this.state = {
             chatitems: [],
-            //  chatitems:  [
-            //     {
-            //         userName: '肉蛋冲击',
-            //         status: 'not',
-            //         lastChat: '我对不起你啊，呜呜呜呜',
-            //         chatTime: '2020/12/02',
-            //         id: 1,
-            //         unReadNum: 2,
-            //         avator: img1
-            //     },
-            //     {
-            //         id: 4,
-            //         userName: '基希卡',
-            //         status: '',
-            //         unReadNum: 2,
-            //         lastChat: '我还是忘不了你。。',
-            //         chatTime: '12:05',
-            //         avator: img2
-            //     },
-            //     {
-            //         id: 5,
-            //         userName: '罗伯特.强哥',
-            //         status: '',
-            //         unReadNum: 10,
-            //         lastChat: 'See you at Yerucham!',
-            //         chatTime: '12:05',
-            //         avator: img3
-            //     },
-            //     {
-            //         id: 6,
-            //         userName: '一代大侠',
-            //         status: '',
-            //         unReadNum: 0,
-            //         lastChat: '仙人抚我顶，很顶',
-            //         chatTime: '12:05',
-            //         avator: img4
-            //     }
-            // ],
             ...store.getState()
         }
         store.subscribe(this.storeChange)
     }
-    showItem= (id) => {
+    showItem = (id) => {
         if (this.state.mode === 'phone') {
             const action = changeContentShow(true)
             store.dispatch(action)
         }
+        let action = setChatRoom(id)
+        store.dispatch(action)
+
     }
     // 组件挂载完成时被执行
     componentDidMount() {
@@ -125,6 +94,9 @@ class MainSide extends Component {
                                         <ChatItem userName={ item.groupName } status={ false } unReadNum={ 0 } lastChat={ 'item.lastChat' } chatTime={ new Date().toLocaleDateString() } avator={item.groupIcon} param={item._id} key={item._id} onClick={this.showItem} />
                                     )
                                 })
+                            }
+                            {
+                                this.state.chatitems.length === 0 ? (<p>暂时没有群组哦</p>):''
                             }
                                         
                         </ul>             

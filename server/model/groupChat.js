@@ -1,4 +1,5 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
+
 
 let chatRecordSchema = new mongoose.Schema({
     groupId: {
@@ -11,20 +12,15 @@ let chatRecordSchema = new mongoose.Schema({
         required: true,
         min: 4
     },
-    receiver: {
-        type: String,
-        required: true,
-        min: 4
-    },
     content: {
         type: String,
         required: true
     },
     chatTime: {
         type: Date,
-        default: new Date().toLocaleDateString
+        default: Date.now
     }
 })
 
 
-module.exports =  chatRecordSchema
+module.exports =  mongoose.model('groupChat', chatRecordSchema)

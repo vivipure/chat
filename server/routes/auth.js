@@ -9,7 +9,12 @@ const config = require('../config')
 const {registerValidation, loginValidation} = require('../utils/vaildation')
 
 
-// 注册用户
+/**
+* @desc 注册用户 
+* @method POST
+* @params {email: '',name:'',password:''}
+* @return {user: user_id,msg: '创建成功'}  
+*/ 
 router.post('/register', async (req, res) => {
     const error = registerValidation(req)
     if (error) {
@@ -41,7 +46,12 @@ router.post('/register', async (req, res) => {
     }
 })
 
-// 登录
+/**
+* @desc 用户登录 
+* @method POST
+* @params {email: '',,password:''}
+* @return {token}  
+*/ 
 router.post('/login', async (req, res) => {
     let error = loginValidation(req)
     if (error) {
