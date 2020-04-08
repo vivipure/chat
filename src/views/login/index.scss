@@ -1,6 +1,5 @@
 $break1: "(max-width:900px)";
 $break3: "(min-width:1024px) and (max-width:1439px)";
-$break3open:"(min-width:1024px)";
 $break4open: "(min-width:1400px)";
 
 @mixin center {
@@ -334,9 +333,9 @@ $break4open: "(min-width:1400px)";
     @media #{$break1} {
         grid-template-columns: 1fr;
         box-shadow: none;
-        background-image: linear-gradient(to bottom, #77a1d3, #79cbca, #e684ae);
+        background-image: linear-gradient(0deg, #08AEEA 0%, #2AF598 100%);
         height: 100%;
-        #login-form {
+        .login-form {
             background-color: #fff;
         }
         &.bgimg {

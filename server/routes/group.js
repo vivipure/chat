@@ -50,11 +50,12 @@ router.post('/detail',async (req, res) => {
     const group =await Group.findOne({
         _id: req.body.id
     })
-    const chatRecord = await GroupChat.find({
+    let chatRecord = await GroupChat.find({
         groupId: req.body.id
     }).sort({
         _id: -1
     }).limit(20)
+    chatRecord = chatRecord.reverse()
     if (group) {
         group.chatRecord = chatRecord
         let data = {

@@ -1,0 +1,18 @@
+@mixin trim {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+}
+
+@mixin scroll {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    /*-webkit-overflow-scrolling:touch;*/
+}
+
+@mixin center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

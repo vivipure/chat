@@ -61,7 +61,7 @@ class MainSide extends Component {
                 <aside className="main-side">
                    <header className="common-header">
                         <div className="common-header-start" onClick={ this.back }>
-                            <UserBox userName='啊这波肉蛋葱鸡' avator={img5} type="main" />
+                            <UserBox userName='Admin' avator={img5} type="main" />
                         </div>
                         <nav className="common-nav">
                             <ul className="common-nav-list">
@@ -91,7 +91,7 @@ class MainSide extends Component {
                                 this.state.chatitems.map(item => {
                                     return (
                                         // <ChatItem userName={ item.groupName } status={ item.status } unReadNum={ item.unReadNum } lastChat={ item.lastChat } chatTime={ item.chatTime } avator={item.avator} param={item.id} key={item.id} onClick={this.showItem} />
-                                        <ChatItem userName={ item.groupName } status={ false } unReadNum={ 0 } lastChat={ 'item.lastChat' } chatTime={ new Date().toLocaleDateString() } avator={item.groupIcon} param={item._id} key={item._id} onClick={this.showItem} />
+                                        <ChatItem userName={ item.groupName } status={ false } unReadNum={ 0 } lastChat={ 'item.lastChat' } chatTime={ new Date().toLocaleDateString() } avator={item.groupIcon} param={item._id} key={item._id} onClick={this.showItem} className={this.chat_room === item._id ? 'active':'normal'} />
                                     )
                                 })
                             }

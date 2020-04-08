@@ -9,6 +9,12 @@ class TextBlock extends Component {
         return (
             <li className={type === 'you' ? 'common-message is-you':'common-message is-other'}>
                     {/* 渲染html 内容 */}
+                    {
+                        type === 'you' ? <p> {this.props.sender}</p>: <p>{this.props.sender}</p>
+                    }
+
+
+
                     <p className="common-message-content" dangerouslySetInnerHTML={{__html: text}}>
                     </p>
                     {

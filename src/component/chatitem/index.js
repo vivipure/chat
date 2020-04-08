@@ -14,9 +14,10 @@ class ChatItem extends Component {
         const chatTime = this.props.chatTime
         const notNotice = this.props.status? '🔇':''
         const unReadNum = this.props.unReadNum
+        const className = this.props.className
         return (
             <Fragment>
-                <li className="chats-item" onClick={ this.showItemDetail }>
+                <li className={className ==='active'?"chats-item active":'chats-item'} onClick={ this.showItemDetail }>
                     <div className="chats-item-button js-chat-button" role="button">
                         <img className="profile-image" src={ avator } alt={ userName } />
                         <header className="chats-item-header">

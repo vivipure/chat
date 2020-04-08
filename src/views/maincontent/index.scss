@@ -1,0 +1,17 @@
+.emptycontent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #EFEFEF;
+    flex-direction: column;
+    background-image: linear-gradient(135deg, #fdfcfb 0%, #ebe8e6 100%);
+    img {
+        width: 340px;
+        height: 340px;
+    }
+    strong {
+        width: 420px;
+        text-align: center;
+        font-size: 30rem;
+    }
+}

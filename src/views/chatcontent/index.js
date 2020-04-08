@@ -40,7 +40,7 @@ class ChatContent extends Component {
                                         </li>
                                         
                                         ):
-                                        <TextBlock text={item.content} type={item.sender === this.state.tempUser? 'you':'other'} isSeen={true} time={new Date(item.chatTime).toLocaleTimeString()} key={item.chatTime} />
+                                        <TextBlock text={item.content} type={item.sender === this.state.tempUser? 'you':'other'} sender={item.sender} isSeen={true} time={new Date(item.chatTime).toLocaleTimeString()} key={item.chatTime} />
                                     )
                                 })
                             }
