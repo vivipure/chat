@@ -7,14 +7,7 @@ class TextBlock extends Component {
         const isSeen = this.props.isSeen
         const time = this.props.time
         return (
-            <li className={type === 'you' ? 'common-message is-you':'common-message is-other'}>
-                    {/* 渲染html 内容 */}
-                    {
-                        type === 'you' ? <p> {this.props.sender}</p>: <p>{this.props.sender}</p>
-                    }
-
-
-
+            <li className={type === 'you' ? 'common-message is-you':'common-message is-other'} data-sender={this.props.sender.substr(0,1)}>
                     <p className="common-message-content" dangerouslySetInnerHTML={{__html: text}}>
                     </p>
                     {

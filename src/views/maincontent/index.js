@@ -30,6 +30,7 @@ class MainContent extends Component {
     showInfo= ()=>{
         this.props.showInfo && this.props.showInfo()
     }
+
     // 订阅state
     storeChange = async () => {
         await this.setState(store.getState())
@@ -178,7 +179,6 @@ class MainContent extends Component {
                     this.state.chat_room ? this.chatBlock():this.emptyBlock()
                 }
                 
-
             </Fragment>
            
         )

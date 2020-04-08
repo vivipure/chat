@@ -26,7 +26,7 @@ class UserBox extends Component {
                                 </button> : ''
                             }
                             <button className={ type === 'normal' ? 'u-flex js-side-info-button':'u-flex js-user-nav' } onClick={ show }>
-                                <img className="profile-image" src={ avator } alt={ userName } />
+                                <img className="profile-image" src={ avator } alt='i' />
                                 <div className="common-header-content">
                                 <h2 className="common-header-title">{ userName }</h2>
                                 {
