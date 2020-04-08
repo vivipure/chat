@@ -105,7 +105,13 @@ class MainContent extends Component {
             this.refs.messagebox.innerHTML = ''
         }
     }
-   
+   handleFocus = () => {
+        this.refs.messagecontent.scrollToBottom()
+        setTimeout(() => {
+            this.refs.messagecontent.scrollToBottom()
+            
+        }, 550);
+   }
     render() {
         return (
             <main className={ this.state.contentShow === true ? "main-content show-content":"main-content" }>
@@ -136,7 +142,7 @@ class MainContent extends Component {
                             <button className="common-button">
                                 <span className="icon">😃</span>
                             </button>
-                        <div className="text-input" id="message-box" placeholder="Type a message" contentEditable='true' ref="messagebox"></div>
+                        <div className="text-input" id="message-box" placeholder="Type a message" contentEditable='true' ref="messagebox" onFocus={this.handleFocus} onTouchStart={this.handleFocus}></div>
                             <button id="voice-button" className="common-button"><span className="icon">🎤</span></button>
                             <button id="submit-button" className="common-button" onClick={this.sendMessage}><span className="icon">➤</span></button>
                         </div>  

@@ -9,7 +9,7 @@ $break4open: "(min-width:1400px)";
     align-items: center;
 }
 
-#login-form {
+.login-form {
     --primary: #6D58FF;
     --primary-dark: #362A89;
     --dark: #2B3044;
@@ -27,7 +27,15 @@ $break4open: "(min-width:1400px)";
     padding: 20px;
     border: 1px solid #2ac28d;
     height: fit-content;
-   
+    position: relative;
+    & > .login {
+        position: relative;
+        top:0;
+        left: 0;
+    }
+    & > .register {
+        position: relative;
+    }
     .logo {
         width: 44px;
         height: 44px;
@@ -298,6 +306,8 @@ $break4open: "(min-width:1400px)";
         }
     }
 }
+.register {
+}
 .login-container {
     position: fixed;
     left: 0;
@@ -365,6 +375,7 @@ $break4open: "(min-width:1400px)";
     .login-content {
         @include center();
         text-align: center;
+        position: relative;
 
     }
 }

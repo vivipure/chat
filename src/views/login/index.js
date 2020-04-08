@@ -107,48 +107,92 @@ class Demo extends Component {
                     <img src={svgIcon} alt=""/>
                 </div>
                 <div className="login-content">
-                    <form id="login-form" readOnly ref="login">
-                    <svg className="logo"  >
-                        <use xlinkHref="#logo" />
-                    </svg>
-                    <h1>登录</h1>
-                    <div className="input email">
-                        <input type="text" value={this.state.userName}  placeholder=" " onChange={this.inputChange} />
-                        <label>Email</label>
-                    </div>
-                    <div className="input password" ref="passw">
-                        <div className="dots" ref="dots"></div>
-                        <input type="password" 
-                                value={ this.state.password }  
-                                placeholder=" " 
-                                onChange={this.inputChange}
-                                onKeyDown={this.keydownChange}
-                                />
-                        <label>Password</label>
-                        <div className="cursor"></div>
-                        <div className="line">
-                            <svg>
-                                <use xlinkHref="#line" />
+                    <form className="login-form" readOnly ref="login">
+                        <div className="login">
+                             <svg className="logo"  >
+                                <use xlinkHref="#logo" />
                             </svg>
+                            <h1>登录</h1>
+                            <div className="input email">
+                                <input type="text" value={this.state.userName}  placeholder=" " onChange={this.inputChange} />
+                                <label>Email</label>
+                            </div>
+                            <div className="input password" ref="passw">
+                                <div className="dots" ref="dots"></div>
+                                <input type="password" 
+                                        value={ this.state.password }  
+                                        placeholder=" " 
+                                        onChange={this.inputChange}
+                                        onKeyDown={this.keydownChange}
+                                        />
+                                <label>Password</label>
+                                <div className="cursor"></div>
+                                <div className="line">
+                                    <svg>
+                                        <use xlinkHref="#line" />
+                                    </svg>
+                                </div>
+                                <div className="tick">
+                                    <svg>
+                                        <use xlinkHref="#tick" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <button disabled={this.state.disabled} onClick={ this.loginBtn }>
+                                <svg viewBox="0 0 16 16">
+                                    <circle strokeOpacity=".1" cx="8" cy="8" r="6"></circle>
+                                    <circle className="load" cx="8" cy="8" r="6"></circle>
+                                </svg>
+                                <span>Submit</span>
+                            </button>
+                            <div className="login-bottom">
+                                <p>注册账号</p>
+                                <p>忘记密码</p>
+                            </div>
                         </div>
-                        <div className="tick">
-                            <svg>
-                                <use xlinkHref="#tick" />
+                        <div className="register">
+                             <svg className="logo"  >
+                                <use xlinkHref="#logo" />
                             </svg>
+                            <h1>登录</h1>
+                            <div className="input email">
+                                <input type="text" value={this.state.userName}  placeholder=" " onChange={this.inputChange} />
+                                <label>Email</label>
+                            </div>
+                            <div className="input password" ref="passw">
+                                <div className="dots" ref="dots"></div>
+                                <input type="password" 
+                                        value={ this.state.password }  
+                                        placeholder=" " 
+                                        onChange={this.inputChange}
+                                        onKeyDown={this.keydownChange}
+                                        />
+                                <label>Password</label>
+                                <div className="cursor"></div>
+                                <div className="line">
+                                    <svg>
+                                        <use xlinkHref="#line" />
+                                    </svg>
+                                </div>
+                                <div className="tick">
+                                    <svg>
+                                        <use xlinkHref="#tick" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <button disabled={this.state.disabled} onClick={ this.loginBtn }>
+                                <svg viewBox="0 0 16 16">
+                                    <circle strokeOpacity=".1" cx="8" cy="8" r="6"></circle>
+                                    <circle className="load" cx="8" cy="8" r="6"></circle>
+                                </svg>
+                                <span>Submit</span>
+                            </button>
+                            <div className="login-bottom">
+                                <p>注册账号</p>
+                                <p>忘记密码</p>
+                            </div>
                         </div>
-                    </div>
-                    <button disabled={this.state.disabled} onClick={ this.loginBtn }>
-                        <svg viewBox="0 0 16 16">
-                            <circle strokeOpacity=".1" cx="8" cy="8" r="6"></circle>
-                            <circle className="load" cx="8" cy="8" r="6"></circle>
-                        </svg>
-                        <span>Submit</span>
-                    </button>
-                    <div className="login-bottom">
-                        <p>注册账号</p>
-                        <p>忘记密码</p>
-                    </div>
-                </form>
+                    </form>
                 </div>
                 
 

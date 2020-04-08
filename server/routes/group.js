@@ -41,7 +41,7 @@ router.get('/list',async (req, res) => {
 })
 
 /**
-* @desc 群组详情(用户,聊天记录 .etc)
+* @desc 群组详情(用户,聊天记录 .etc )[限制最后20条]
 * @method post
 * @params {id: id}
 * @return {data:{}}}  
@@ -52,7 +52,9 @@ router.post('/detail',async (req, res) => {
     })
     const chatRecord = await GroupChat.find({
         groupId: req.body.id
-    })
+    }).sort({
+        _id: -1
+    }).limit(20)
     if (group) {
         group.chatRecord = chatRecord
         let data = {

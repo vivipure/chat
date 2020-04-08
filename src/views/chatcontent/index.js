@@ -3,6 +3,12 @@ import React, { Component } from 'react';
 import TextBlock from '../../component/textblock'
 import store from '../../store'
 
+
+/**
+* @desc 聊天框组件
+* @params chatList
+* [content,sender,chatTime]
+*/ 
 class ChatContent extends Component {
     constructor(props) {
         super(props)
@@ -15,7 +21,6 @@ class ChatContent extends Component {
        this.refs.msgbox.scrollTo(0, y)
     }
     render() {
-        // const chatList = this.props.chatList
         return (
             <div className="messanger" ref="msgbox">
                         <ol className="messanger-list">
