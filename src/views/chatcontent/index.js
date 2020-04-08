@@ -10,10 +10,14 @@ class ChatContent extends Component {
             ...store.getState()
         }
     }
+    scrollToBottom = () => {
+       const y =  this.refs.msgbox.scrollHeight
+       this.refs.msgbox.scrollTo(0, y)
+    }
     render() {
         // const chatList = this.props.chatList
         return (
-            <div className="messanger">
+            <div className="messanger" ref="msgbox">
                         <ol className="messanger-list">
                             <li className="common-message is-time">
                                 <p className="common-message-content">

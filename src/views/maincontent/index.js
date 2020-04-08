@@ -87,13 +87,14 @@ class MainContent extends Component {
         })
 
 
-        socket.on('message', message => {
+        socket.on('message',async message => {
             console.log(message)
             let temp = this.state.chatList.slice()
             this.state.chatList.push()
-            this.setState({
+            await this.setState({
                 chatList: temp.concat([message])
             })
+            this.refs.messagecontent.scrollToBottom()
         });
     }
     sendMessage = () => {
