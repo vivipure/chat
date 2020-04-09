@@ -57,6 +57,20 @@ class MainSide extends Component {
     back = () => {
         this.props.login()
     }
+    timeParse = (time) => {
+        if (time === '') {
+            return new Date().toLocaleDateString()
+        }
+        let d = new Date(time)
+        let gapTime = Date.now()- d.getTime()
+        if (gapTime < 24*60*60*1000) {
+            return `${d.getHours()}:${d.getMinutes()}`
+        }else if (gapTime < 2*24*60*60*1000) {
+            return `昨日`
+        }else {
+            return d.toLocaleDateString()
+        }
+    } 
     render() {
         return (
                 <aside className="main-side">
@@ -92,7 +106,7 @@ class MainSide extends Component {
                                 this.state.chatitems.map(item => {
                                     return (
                                         // <ChatItem userName={ item.groupName } status={ item.status } unReadNum={ item.unReadNum } lastChat={ item.lastChat } chatTime={ item.chatTime } avator={item.avator} param={item.id} key={item.id} onClick={this.showItem} />
-                                        <ChatItem userName={ item.groupName } status={ false } unReadNum={ 0 } lastChat={ 'item.lastChat' } chatTime={ new Date().toLocaleDateString() } avator={item.groupIcon} param={item._id} key={item._id} onClick={this.showItem} className={this.chat_room === item._id ? 'active':'normal'} />
+                                        <ChatItem userName={ item.groupName } status={ false } unReadNum={ 0 } lastChat={ item.lastChat } chatTime={ this.timeParse(item.lastChatTime) } avator={item.groupIcon} param={item._id} key={item._id} onClick={this.showItem} className={this.chat_room === item._id ? 'active':'normal'} />
                                     )
                                 })
                             }

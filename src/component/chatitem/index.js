@@ -25,7 +25,7 @@ class ChatItem extends Component {
                             <time className="chats-item-time">{ chatTime }</time>
                         </header>
                         <div className="chats-item-content">
-                            <p className="chats-item-last">{ lastChat }</p>
+                            <p className="chats-item-last" dangerouslySetInnerHTML={{__html:lastChat}}></p>
                             <ul className="chats-item-info">
                                 <li className="chats-item-info-item">
                                     <span className={notNotice ? 'icon-silent':unReadNum?'unread-messsages':''}>{notNotice || unReadNum || ''}</span>

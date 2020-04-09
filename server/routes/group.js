@@ -32,8 +32,21 @@ router.post('/add',async (req, res) => {
 */ 
 router.get('/list',async (req, res) => {
     let groupList =await Group.find()
-    if (groupList && groupList.length) {
-        res.send(groupList)
+    // 浅拷贝数组
+    let newGroup = JSON.parse(JSON.stringify(groupList)) 
+    // 找到最新的聊天记录
+    for (let i in newGroup) {
+        let last = await GroupChat.find({
+            groupId: newGroup[i]._id
+        }).sort({
+            _id: -1
+        }).limit(1)
+
+        newGroup[i].lastChat = (last.length && last[0].content) || ''
+        newGroup[i].lastChatTime = (last.length && last[0].chatTime) || ''
+    }
+    if (newGroup && newGroup.length) {
+        res.send(newGroup)
     }else {
         res.send([])
     }

@@ -571,6 +571,7 @@ html {
             height: 50px;
             width: 50px;
             margin: auto;
+            border: 1px solid #ccc;
         }
 
         &-header {
@@ -598,6 +599,10 @@ html {
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            height: 20rem;
+            font-size: 14rem;
+            color: #595959;
+            margin-top: 2rem;
         }
 
         &-content {
