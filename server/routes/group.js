@@ -35,7 +35,7 @@ router.get('/list',async (req, res) => {
     if (groupList && groupList.length) {
         res.send(groupList)
     }else {
-        res.status(400).send("can't find any group")
+        res.send([])
     }
 
 })

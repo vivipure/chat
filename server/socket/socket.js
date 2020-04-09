@@ -4,13 +4,13 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require('../users');
 const GroupChat = require('../model/groupChat')
 
 module.exports =  function ws(io) {
+  // io 实例 连接客户端
     io.on('connect', (socket) => {
         console.log('有用户连接了',socket.id)
-
+        // 加入房间 
         socket.on('join', ({ name, room }, callback) => {
           // 添加用户
           const { error, user } = addUser({ id: socket.id, name, room });
-          console.log(user)
           if(error) return callback(error);
 
           socket.join(user.room);
@@ -26,13 +26,12 @@ module.exports =  function ws(io) {
           io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
           callback();
         });
-      
+        //  用户发送消息
         socket.on('sendMessage', async (message) => {
           const user = getUser(socket.id)
-          console.log(user)
           let date = new Date()
           io.to(user.room).emit('message', { sender: user.name, content: message,chatTime: date});
-          // 进行存储
+          // 聊天记录
           let chat = new GroupChat({
             sender: user.name,
             content: message,
@@ -53,3 +52,6 @@ module.exports =  function ws(io) {
         })
       });
 }
+
+// todo:
+// 用户离开房间对信息进行推送

@@ -44,6 +44,7 @@ class MainSide extends Component {
             url: '/group/list',
             method: 'get'
         }).then(res => {
+            
             this.setState({
                 chatitems: res.data
             })
@@ -71,7 +72,7 @@ class MainSide extends Component {
                                     </button>
                                 </li>
                                 <li className="common-nav-item">
-                                    <button className="common-button">
+                                    <button className="common-button" title="清空所有信息">
                                         <span className="icon icon-status">💬</span>
                                     </button>
                                 </li>
@@ -96,7 +97,7 @@ class MainSide extends Component {
                                 })
                             }
                             {
-                                this.state.chatitems.length === 0 ? (<p>暂时没有群组哦</p>):''
+                                this.state.chatitems.length === 0 ? (<p className="emptyGroup">暂时没有群组哦</p>):''
                             }
                                         
                         </ul>             

@@ -7,6 +7,8 @@ const mongoose = require('mongoose')
 const authRoute = require('./routes/auth')
 const groupRoute = require('./routes/group')
 const config = require('./config')
+const ws = require('./socket/socket')
+
 
 mongoose.connect(config.DB_CONNECT, {
   useNewUrlParser: true
@@ -18,12 +20,12 @@ mongoose.connect(config.DB_CONNECT, {
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-const ws = require('./socket/io')
-//  middle ware
+
+
 
 app.use(express.json())
-
 app.use(cors())
+
 // 用户路由
 app.use('/api/user', authRoute)
 // 群组路由

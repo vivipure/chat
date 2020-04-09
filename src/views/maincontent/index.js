@@ -12,6 +12,9 @@ import io from "socket.io-client";
 const img1 = require('../../icons/avator_1.jpg')
 const emptyImg = require("../../icons/onlinechat.svg")
 
+const iteminarray = (item,arr) => {
+    
+}
 
 class MainContent extends Component {
     constructor(props) {
@@ -30,13 +33,13 @@ class MainContent extends Component {
     showInfo= ()=>{
         this.props.showInfo && this.props.showInfo()
     }
-
     // 订阅state
     storeChange = async () => {
         await this.setState(store.getState())
     }
     // 获取群组信息
     getRoomDetail = async () => {
+
         if (this.state.chat_room === 0) return
         await request({
             url: '/group/detail',
@@ -51,25 +54,19 @@ class MainContent extends Component {
                 userName: data.groupName,
                 avator: data.groupIcon,
                 chatList: chat,
+                group: data
             })
         })
         this.refs.messagecontent.scrollToBottom()
-        if (this.state.chat_room in this.state.groupList) {
-            console.log('你已经连过这个房间了')
-            // 找到此连接
-            let socket = this.state.sockets.find(item => item.groupId === this.state.chat_room)
-            await socket.socket.emit('join', {
-                name: this.state.tempUser,
-                room: this.state.chat_room
-            })
-        }else {
-            this.chat()
+        let index = this.state.groupList.findIndex(item => item === this.state.chat_room)
 
+        if (index !== -1) {
+        }else {
+            this.startChat()
         }
-         
     }
     // 建立socket 连接
-    chat = async () => {
+    startChat = async () => {
         const socket = await io('http://localhost:52000')
         // 组件保存socket
         await this.setState({
@@ -79,7 +76,6 @@ class MainContent extends Component {
             }]),
             groupList: this.state.groupList.concat([this.state.chat_room])
         })
-        
 
         // 连接
         await socket.on('connect', ()=> {
@@ -93,10 +89,7 @@ class MainContent extends Component {
                 console.log(error);
             }
         })
-
-
         socket.on('message',async message => {
-            console.log(message)
             let temp = this.state.chatList.slice()
             this.state.chatList.push()
             await this.setState({
@@ -104,16 +97,26 @@ class MainContent extends Component {
             })
             this.refs.messagecontent.scrollToBottom()
         });
+        socket.on('roomData', message => {
+            const {users} = message
+            this.state.group.users = users
+
+        })
     }
     // 发送信息
-    sendMessage = () => {
+    sendMessage = async () => {
+        console.time('message')
+        await this.socketStateCheck()
         let content = this.refs.messagebox.innerHTML
         if(content) {
             let socket = this.state.sockets.find(item => item.groupId === this.state.chat_room)
             socket.socket.emit('sendMessage',content)
             this.refs.messagebox.innerHTML = ''
         }
+        console.timeEnd('message')
+
     }
+    // 聊天界面
     chatBlock = () => {
         return (
                 <main className={ this.state.contentShow === true ? "main-content show-content":"main-content" }>
@@ -155,6 +158,7 @@ class MainContent extends Component {
                 </main>
         )
     }
+    // 初始界面
     emptyBlock = () => {
         return (
              <main className='maincontent emptycontent'>
@@ -163,22 +167,41 @@ class MainContent extends Component {
             </main>
         )
     }
+    // socket状态检测
+    socketStateCheck = async () => {
+        const socket = this.state.sockets.find(item => item.groupId === this.state.chat_room).socket
+        // 重连状态
+        if (socket.connected === false && socket.disconnected === true) {
+            console.warn('你已经断线了,尝试重连')
+            await socket.connect()
+            await socket.emit('join', {
+                name: this.state.tempUser,
+                room: this.state.chat_room
+            },(error) => {
+            if(error) {
+                console.log(error);
+            }
+            })
+        }
 
+    }
     // 处理移动端 键盘弹起事件
-   handleFocus = () => {
+    handleFocus = () => {
         this.refs.messagecontent.scrollToBottom()
         setTimeout(() => {
             this.refs.messagecontent.scrollToBottom()
-            
         }, 550);
-   }
+    }
+    componentDidMount() {
+        this.getRoomDetail()
+    }
+    
     render() {
         return (
             <Fragment>
                 {
-                    this.state.chat_room ? this.chatBlock():this.emptyBlock()
+                    this.state.mode === 'normal' && this.state.chat_room === 0 ? this.emptyBlock() : this.chatBlock()
                 }
-                
             </Fragment>
            
         )

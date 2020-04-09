@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import store from '../../store'
 
 class InfoSide extends Component {
     constructor(props) {
@@ -7,12 +8,21 @@ class InfoSide extends Component {
             open: false
         }
     }
+  
     changeOpen() {
          this.setState({
             open: !this.state.open
         })
     }
+    
     render() {
+        const {
+            groupName,
+            groupIcon,
+            desc,
+            create_date,
+            users
+        } = this.props.group
         return (
              <aside className={this.state.open ? 'main-info':'main-info u-hide' }>    
                         <header className="common-header">
@@ -25,17 +35,26 @@ class InfoSide extends Component {
                         </header>
                         <div className="main-info-content">
                             <section className="common-box">
-                            <img className="main-info-image" src="https://bit.ly/37SNAl8" alt="CSS Masters Israel" />
-                            <h4 className="big-title">CSS Masters Israel</h4>
-                            <p className="info-text">Created 6/11/2013 at 22:45</p>
+                            <img className="main-info-image" src={groupIcon} alt="CSS Masters Israel" />
+                            <h4 className="big-title">{groupName}</h4>
+                            <p className="info-text">创建于{new Date(create_date).toLocaleDateString()} </p>
                             </section>
                             <section className="common-box">
-                            <h5 className="section-title">Description</h5>
-                            <p>Out main channel of the comunity is on Fecbook: <a href="https://www.facebook.com/groups/css.masters.israel/">http://bit.ly/2Up8On5</a></p>
+                            <h5 className="section-title">简介</h5>
+                            <p>{
+                                desc
+                            }</p>
                             </section>
                             <section className="common-box">
-                            <h5 className="section-title">Other content</h5>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto odit voluptatem magnam sequi dolorem soluta assumenda ipsum iusto culpa velit repudiandae vitae minus minima corporis labore sit, molestias, a ut!</p>
+                                <h5 className="section-title">在线成员</h5>
+                                {
+                                    users && users.map(item => {
+                                        return (
+                                            <p className="activeUser" key={item.id}>{item.name}</p>
+                                        )
+                                    })
+                                }
+                                
                             </section>
                         </div>
             </aside>

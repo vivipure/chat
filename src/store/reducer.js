@@ -3,7 +3,8 @@ const defaultState = {
     mode: 'normal',
     contentShow: false,
     chat_room: 0,
-    tempUser: `${(Math.random()*1000).toFixed(3)*1000}user`
+    tempUser: `user${(Math.random()*1000).toFixed(3)*1000}`
+    // 
 }
 // 定义action
 

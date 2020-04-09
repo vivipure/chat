@@ -17,7 +17,16 @@ const groupSchema = new mongoose.Schema({
     groupIcon: {
         type: String,
         default: 'http://img1.imgtn.bdimg.com/it/u=2759056295,3677356734&fm=26&gp=0.jpg'
+    },
+    create_date: {
+        type: Date,
+        default: Date.now
+    },
+    desc: {
+        type: String,
+        default: '本群还没有介绍哦。'
     }
+
 })
 
 module.exports = mongoose.model('group', groupSchema)

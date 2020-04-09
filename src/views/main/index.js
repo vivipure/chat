@@ -12,9 +12,13 @@ class MainFrame extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            group: {}
         }
     }
     showInfo= ()=> {
+        this.setState({
+            group: this.refs.main.state.group
+        })
         this.refs.childRef.changeOpen()
     }
     goLogin = () => {
@@ -29,7 +33,7 @@ class MainFrame extends Component {
                 <section className="main-grid"> 
                     <MainSide login={ this.goLogin } showContent={this.showContent} /> 
                     <MainContent showInfo={this.showInfo} ref="main" /> 
-                    <InfoSide ref='childRef'  />
+                    <InfoSide ref='childRef' group={this.state.group} />
                 </section> 
             </div>
         )
