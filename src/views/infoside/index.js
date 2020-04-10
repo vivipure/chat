@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import store from '../../store'
 
 class InfoSide extends Component {
     constructor(props) {
