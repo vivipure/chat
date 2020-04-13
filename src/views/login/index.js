@@ -89,6 +89,7 @@ function Input(props, ref) {
                         <use xlinkHref="#line" />
                     </svg>
                 </div>
+                {/* 验证 */}
                 <div className="tick">
                     <svg>
                         <use xlinkHref="#tick" />
@@ -110,6 +111,7 @@ function LoginBox() {
     useEffect(()=>{
         let toastId 
         const { search }= history.location
+        // 不同路由进行跳转
         if(search === '?from=register' ) {
             toastId=  toast('🦄 用你注册的账号进行登录吧!', {
                 position: "top-center",
