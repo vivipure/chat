@@ -1,12 +1,17 @@
-import React, { Component, useState, useEffect, useRef, createContext, useContext, useImperativeHandle, forwardRef } from 'react';
-
+import React, { useState, useRef, useEffect, createContext, useContext, useImperativeHandle, forwardRef } from 'react';
 import { useHistory } from "react-router-dom";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.scss'
 
 // 图片引用
 const wave = require('../../icons/wave.png')
 const svgIcon = require('../../icons/loginbackground.svg')
+
+toast.configure({
+    position: 'top-center'
+})
+
 
 const FormContext = createContext()
 const { Provider} = FormContext
@@ -53,19 +58,19 @@ function Input(props, ref) {
         }
     }
     function inputChange (e) {
-        let t = e.target
-        if (t.value.length>16) {
+        let t = e.target.value
+        if (t.length>16) {
             return 
         }
         // password 输入框逻辑
         // 模拟输入 *
-        if (t.value.length > password.length) {
+        if (t.length > password.length) {
             dotsEl.current.appendChild(document.createElement('i'))
         }
-        inputEl.current.style.setProperty('--cursor-x', t.value.length * 10 + 'px')
+        inputEl.current.style.setProperty('--cursor-x', t.length * 10 + 'px')
 
-        setPassword(t.value)
-        setDisable(!t.value.length)
+        setPassword(t)
+        setDisable(!t.length)
         
     }
     return (
@@ -102,7 +107,24 @@ function Register() {
     const [password, setPassword] = useState('')
     const [disable, setDisable] = useState(true)
     const [press, setPress] = useState('')
-
+    const notify = (e) => {
+        e.preventDefault();
+        
+        toast("这个功能还没有做哦 !")
+    }
+    useEffect(()=>{
+        let toastId  =  toast('🦄 测试阶段直接输入密码admin 就可以登录了!', {
+                            position: "top-center",
+                            autoClose: false,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true
+                        })
+        return () => {
+            toast.dismiss(toastId)
+        }
+    },[])
     // ref
     const loginEl = useRef(null)
     const passEl = useRef(null)
@@ -145,8 +167,6 @@ function Register() {
                 }, 1500);
             }
     }
-
-   
     return (
           <div className="login-container">
                 <img  className="wave" src={wave} alt=""/>
@@ -159,7 +179,7 @@ function Register() {
                              <svg className="logo"  >
                                 <use xlinkHref="#logo" />
                             </svg>
-                            <h1>注册</h1>
+                            <h1>登录</h1>
                             <div className="input email">
                                 <input type="text" value={userName}  placeholder=" " onChange={e => {setUserName(e.target.value)}} />
                                 <label>Email</label>
@@ -174,11 +194,14 @@ function Register() {
                                 </svg>
                                 <span>Submit</span>
                             </button>
-
-
+                            <div className="login-bottom">
+                                <p onClick={notify}>注册账号</p>
+                                <p>忘记密码</p>
+                            </div>
                         </div>
                     </form>
                 </div>
+                {/* <ToastContainer /> */}
                 
 
                 {/* svg icons */}
