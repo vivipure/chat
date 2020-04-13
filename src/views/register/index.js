@@ -11,7 +11,7 @@ const svgIcon = require('../../icons/loginbackground.svg')
 const FormContext = createContext()
 const { Provider} = FormContext
 
-// 输入框 hook
+// 输入框组件
 function Input(props, ref) {
     const {
         password,
@@ -21,7 +21,6 @@ function Input(props, ref) {
         setPress,
         loginEl
     } = useContext(FormContext)
-
     const inputEl = useRef(null)
     const dotsEl = useRef(null)
     // 暴露给父组件的方法
@@ -93,22 +92,15 @@ function Input(props, ref) {
 
     )
 }
-// 暴露给父组件
 let InputP = forwardRef(Input)
-// form 组件
 function Register() {
-    // state
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
-    const [disable, setDisable] = useState(true)
+    const [disable, setDisable] = useState('')
     const [press, setPress] = useState('')
-
-    // ref
     const loginEl = useRef(null)
     const passEl = useRef(null)
-    // 路由
     const history = useHistory()
-    // 传值
     const store = {
         disable,
         password,
@@ -118,8 +110,8 @@ function Register() {
         setPress,
         loginEl
     }
-    // 登录
-    function submit(e) {
+
+    function loginBtn(e) {
             e.preventDefault()
             const login = loginEl.current
             if (!login.classList.contains('processing')) {
@@ -145,8 +137,10 @@ function Register() {
                 }, 1500);
             }
     }
-
-   
+    function inputChange(e) {
+        let t = e.target
+        setUserName(t.value)
+    }
     return (
           <div className="login-container">
                 <img  className="wave" src={wave} alt=""/>
@@ -161,13 +155,13 @@ function Register() {
                             </svg>
                             <h1>注册</h1>
                             <div className="input email">
-                                <input type="text" value={userName}  placeholder=" " onChange={e => {setUserName(e.target.value)}} />
+                                <input type="text" value={userName}  placeholder=" " onChange={inputChange} />
                                 <label>Email</label>
                             </div>
                             <Provider value={store}>
                                 <InputP ref={passEl} />
                             </Provider>
-                            <button disabled={disable} onClick={ submit }>
+                            <button disabled={disable} onClick={ loginBtn }>
                                 <svg viewBox="0 0 16 16">
                                     <circle strokeOpacity=".1" cx="8" cy="8" r="6"></circle>
                                     <circle className="load" cx="8" cy="8" r="6"></circle>
