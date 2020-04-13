@@ -1,26 +1,30 @@
-import React, { Component, useState, useEffect, useRef, createContext, useContext, useImperativeHandle, forwardRef } from 'react';
-
+import React, { useState, useRef, useEffect, createContext, useContext, useImperativeHandle, forwardRef } from 'react';
 import { useHistory } from "react-router-dom";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.scss'
+import { func } from 'prop-types';
 
 // 图片引用
 const wave = require('../../icons/wave.png')
 const svgIcon = require('../../icons/loginbackground.svg')
 
+toast.configure({
+    position: 'top-center'
+})
+
+
 const FormContext = createContext()
 const { Provider} = FormContext
 
-// 输入框组件
+// 输入框 hook
 function Input(props, ref) {
     const {
-        password,
-        setPassword,
-        setDisable,
-        press,
-        setPress,
-        loginEl
+        value,
+        setValue,
+        loginEl,
     } = useContext(FormContext)
+    const { label } = props
     const inputEl = useRef(null)
     const dotsEl = useRef(null)
     // 暴露给父组件的方法
@@ -34,13 +38,9 @@ function Input(props, ref) {
     }))
     
     function keydownChange(e) {
-        if (press || loginEl.current.classList.contains('processing') ||(password.length > 15 && e.keyCode !== 8 && e.keyCode !== 13)) {
+        if (loginEl.current.classList.contains('processing') ||(value.length > 15 && e.keyCode !== 8 && e.keyCode !== 13)) {
             e.preventDefault();
         }
-        setPress(true)
-        setTimeout(() => {
-            setPress(false)
-        }, 50)
         // 删除键
         if(e.keyCode === 8) {
             let end = dotsEl.current.lastChild
@@ -52,31 +52,28 @@ function Input(props, ref) {
         }
     }
     function inputChange (e) {
-        let t = e.target
-        if (t.value.length>16) {
+        let t = e.target.value
+        if (t.length>16) {
             return 
         }
         // password 输入框逻辑
         // 模拟输入 *
-        if (t.value.length > password.length) {
+        if (t.length > value.length) {
             dotsEl.current.appendChild(document.createElement('i'))
         }
-        inputEl.current.style.setProperty('--cursor-x', t.value.length * 10 + 'px')
-
-        setPassword(t.value)
-        setDisable(!t.value.length)
-        
+        inputEl.current.style.setProperty('--cursor-x', t.length * 10 + 'px')
+        setValue(t)
     }
     return (
             <div className="input password" ref={inputEl}>
                 <div className="dots" ref={dotsEl}></div>
                 <input type="password" 
-                    value={ password }  
+                    value={ value }  
                     placeholder=" " 
                     onChange={inputChange}
                     onKeyDown={keydownChange}
                     />
-                <label>Password</label>
+                <label>{label}</label>
                 <div className="cursor"></div>
                 <div className="line">
                     <svg>
@@ -89,57 +86,76 @@ function Input(props, ref) {
                     </svg>
                 </div>
             </div>
-
     )
 }
+// 暴露给父组件
 let InputP = forwardRef(Input)
+// form 组件
 function Register() {
+    // state
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
-    const [disable, setDisable] = useState('')
-    const [press, setPress] = useState('')
+    const [confirmPass, setConfirmPass] = useState('')
+    const [disable, setDisable] = useState(true)
+    
+    // ref
     const loginEl = useRef(null)
-    const passEl = useRef(null)
+    const passElOne = useRef(null)
+    const passElTwo = useRef(null)
+    // 路由
     const history = useHistory()
-    const store = {
-        disable,
-        password,
-        setPassword,
-        setDisable,
-        press,
-        setPress,
-        loginEl
+    // 传值
+    const passD1 = {
+        value: password,
+        setValue: setPassword,
+        loginEl,
+    }
+    const passD2 = {
+        value: confirmPass,
+        setValue: setConfirmPass,
+        loginEl,
+    }
+    const notify = (e) => {
+        toast("这个功能还没有做哦 !")
     }
 
-    function loginBtn(e) {
+    useEffect(() => {
+        setDisable(!userName || !confirmPass || !password )
+    },[confirmPass, password, userName])
+
+    
+    // 登录
+    function submit(e) {
             e.preventDefault()
             const login = loginEl.current
             if (!login.classList.contains('processing')) {
                 login.classList.add('processing')
                 setTimeout(() => {
                     // 验证部分
-                    let cls = password === 'admin' ? 'success' : 'error';
+                    let cls = password === confirmPass ? 'success' : 'error';
+                    console.log(cls)
                     login.classList.add(cls);
                     // 动画部分
                     if (cls === 'error') {
                         setTimeout(() => {
                             login.classList.remove('processing', cls);
-                            passEl.current.clearDots()
+                            passElOne.current.clearDots()
+                            passElTwo.current.clearDots()
                             setDisable(true)
                             setPassword('')
                         }, 2000);
                         setTimeout(() => {
-                           passEl.current.setStyle(0)
+                           passElOne.current.setStyle(0)
+                           passElTwo.current.setStyle(0)
                         }, 600);
                     }else {
-                        history.push('/')
+                        history.push('/login?from=register')
                     }
                 }, 1500);
             }
     }
-    function inputChange(e) {
-        let t = e.target
-        setUserName(t.value)
+    function login() {
+        history.push('/login')
     }
     return (
           <div className="login-container">
@@ -155,21 +171,26 @@ function Register() {
                             </svg>
                             <h1>注册</h1>
                             <div className="input email">
-                                <input type="text" value={userName}  placeholder=" " onChange={inputChange} />
-                                <label>Email</label>
+                                <input type="text" value={userName}  placeholder=" " onChange={e => {setUserName(e.target.value)}} />
+                                <label>请输入你的邮箱</label>
                             </div>
-                            <Provider value={store}>
-                                <InputP ref={passEl} />
+                            <Provider value={passD1}>
+                                <InputP ref={passElOne} label="请输入你的密码" />
                             </Provider>
-                            <button disabled={disable} onClick={ loginBtn }>
+                            <Provider value={passD2}>
+                                <InputP ref={passElTwo} label="确认你的密码" />
+                            </Provider>
+                            <button disabled={disable} onClick={ submit }>
                                 <svg viewBox="0 0 16 16">
                                     <circle strokeOpacity=".1" cx="8" cy="8" r="6"></circle>
                                     <circle className="load" cx="8" cy="8" r="6"></circle>
                                 </svg>
                                 <span>Submit</span>
                             </button>
-
-
+                            <div className="login-bottom" style={{ justifyContent:"flex-end"}}>
+                                <p onClick={login}>已有账号，快去登录</p>
+                                
+                            </div>
                         </div>
                     </form>
                 </div>

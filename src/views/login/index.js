@@ -95,32 +95,42 @@ function Input(props, ref) {
                     </svg>
                 </div>
             </div>
-
     )
 }
 // 暴露给父组件
 let InputP = forwardRef(Input)
 // form 组件
-function Register() {
+function LoginBox() {
     // state
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
     const [disable, setDisable] = useState(true)
     const [press, setPress] = useState('')
-    const notify = (e) => {
-        e.preventDefault();
-        
-        toast("这个功能还没有做哦 !")
-    }
+    
     useEffect(()=>{
-        let toastId  =  toast('🦄 测试阶段直接输入密码admin 就可以登录了!', {
-                            position: "top-center",
-                            autoClose: false,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true
-                        })
+        let toastId 
+        const { search }= history.location
+        if(search === '?from=register' ) {
+            toastId=  toast('🦄 用你注册的账号进行登录吧!', {
+                position: "top-center",
+                autoClose: false,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            })
+        }else {
+            toastId=  toast('🦄 测试阶段直接输入密码admin 就可以登录了!', {
+                position: "top-center",
+                autoClose: false,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            })
+        }
+         
+        // 销毁该组件时 操作
         return () => {
             toast.dismiss(toastId)
         }
@@ -130,6 +140,9 @@ function Register() {
     const passEl = useRef(null)
     // 路由
     const history = useHistory()
+    const notify = (e) => {
+        history.push('/register')
+    }
     // 传值
     const store = {
         disable,
@@ -201,7 +214,6 @@ function Register() {
                         </div>
                     </form>
                 </div>
-                {/* <ToastContainer /> */}
                 
 
                 {/* svg icons */}
@@ -223,4 +235,4 @@ function Register() {
 
 
 
-export default Register
+export default LoginBox
