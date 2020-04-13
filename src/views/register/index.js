@@ -38,7 +38,7 @@ function Input(props, ref) {
     }))
     
     function keydownChange(e) {
-        if (loginEl.current.classList.contains('processing') ||(value.length > 15 && e.keyCode !== 8 && e.keyCode !== 13)) {
+        if ((value.length > 15 && e.keyCode !== 8 && e.keyCode !== 13)) {
             e.preventDefault();
         }
         // 删除键
@@ -121,6 +121,13 @@ function Register() {
 
     useEffect(() => {
         setDisable(!userName || !confirmPass || !password )
+        if (userName && confirmPass && confirmPass === password ) {
+            loginEl.current.classList.add('processing')
+            loginEl.current.classList.add('success')
+        }else {
+            loginEl.current.classList.remove('processing')
+            loginEl.current.classList.remove('success')
+        }
     },[confirmPass, password, userName])
 
     
@@ -149,7 +156,7 @@ function Register() {
                            passElTwo.current.setStyle(0)
                         }, 600);
                     }else {
-                        history.push('/login?from=register')
+                        // history.push('/login?from=register')
                     }
                 }, 1500);
             }
