@@ -12,9 +12,6 @@ import io from "socket.io-client";
 const img1 = require('../../icons/avator_1.jpg')
 const emptyImg = require("../../icons/onlinechat.svg")
 
-const iteminarray = (item,arr) => {
-    
-}
 
 class MainContent extends Component {
     constructor(props) {
@@ -194,6 +191,9 @@ class MainContent extends Component {
     }
     componentDidMount() {
         this.getRoomDetail()
+    }
+    componentWillUnmount() {
+        
     }
     
     render() {

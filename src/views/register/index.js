@@ -1,16 +1,26 @@
 import React, { useState, useRef, useEffect, createContext, useContext, useImperativeHandle, forwardRef } from 'react';
 import { useHistory } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.scss'
-import { func } from 'prop-types';
+import request from "../../utils/request";
+import { isEmail, passwordCheck } from "../../utils/validate";
+
 
 // 图片引用
 const wave = require('../../icons/wave.png')
 const svgIcon = require('../../icons/loginbackground.svg')
 
+// 请求库
+
+
 toast.configure({
-    position: 'top-center'
+    osition: "top-center",
+    autoClose: true,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
 })
 
 
@@ -22,7 +32,6 @@ function Input(props, ref) {
     const {
         value,
         setValue,
-        loginEl,
     } = useContext(FormContext)
     const { label } = props
     const inputEl = useRef(null)
@@ -97,6 +106,7 @@ function Register() {
     const [password, setPassword] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
     const [disable, setDisable] = useState(true)
+    const [press, setPress] = useState(false)
     
     // ref
     const loginEl = useRef(null)
@@ -108,19 +118,15 @@ function Register() {
     const passD1 = {
         value: password,
         setValue: setPassword,
-        loginEl,
     }
     const passD2 = {
         value: confirmPass,
         setValue: setConfirmPass,
-        loginEl,
-    }
-    const notify = (e) => {
-        toast("这个功能还没有做哦 !")
     }
 
     useEffect(() => {
-        setDisable(!userName || !confirmPass || !password )
+        setDisable(!userName || !confirmPass || !password || confirmPass !== password)
+       
         if (userName && confirmPass && confirmPass === password ) {
             loginEl.current.classList.add('processing')
             loginEl.current.classList.add('success')
@@ -129,37 +135,61 @@ function Register() {
             loginEl.current.classList.remove('success')
         }
     },[confirmPass, password, userName])
-
+    // 验证部分
+    const checkUser = () => {
+        if (!isEmail(userName)) {
+            return {
+                error: '🔊 邮箱地址格式错误'
+            }
+        }
+        return passwordCheck(password)
+    }
+    
     
     // 登录
     function submit(e) {
             e.preventDefault()
             const login = loginEl.current
-            if (!login.classList.contains('processing')) {
-                login.classList.add('processing')
-                setTimeout(() => {
-                    // 验证部分
-                    let cls = password === confirmPass ? 'success' : 'error';
-                    console.log(cls)
-                    login.classList.add(cls);
-                    // 动画部分
-                    if (cls === 'error') {
-                        setTimeout(() => {
-                            login.classList.remove('processing', cls);
-                            passElOne.current.clearDots()
-                            passElTwo.current.clearDots()
-                            setDisable(true)
-                            setPassword('')
-                        }, 2000);
-                        setTimeout(() => {
-                           passElOne.current.setStyle(0)
-                           passElTwo.current.setStyle(0)
-                        }, 600);
-                    }else {
-                        // history.push('/login?from=register')
+            if (press === true) return
+            setPress(true) 
+                // 验证部分
+                let { error } = checkUser()
+                let cls = error ? 'error' : 'success';
+                login.classList.add(cls);
+               
+                // 动画部分
+                if (cls === 'error') {
+                     toast(error)
+                    setTimeout(() => {
+                        login.classList.remove('processing', cls);
+                        passElOne.current.clearDots()
+                        passElTwo.current.clearDots()
+                        setDisable(true)
+                        setPassword('')
+                        setPress(false)
+                    }, 2000);
+                    setTimeout(() => {
+                       passElOne.current.setStyle(0)
+                       passElTwo.current.setStyle(0)
+                    }, 600);
+                    
+                }else {
+                    const name = userName.split('@')[0]
+                    let params = {
+                        name,
+                        email: userName,
+                        password: confirmPass
                     }
-                }, 1500);
-            }
+                        setPress(false)
+
+                    request({
+                        url: '/user/register',
+                        method: 'post',
+                        data: params
+                    }).then(res => {
+                        history.push('/login?from=register')
+                    })
+                }
     }
     function login() {
         history.push('/login')
@@ -179,7 +209,11 @@ function Register() {
                             <h1>注册</h1>
                             <div className="input email">
                                 <input type="text" value={userName}  placeholder=" " onChange={e => {setUserName(e.target.value)}} />
-                                <label>请输入你的邮箱</label>
+                                <label>用户名</label>
+                            </div>
+                            <div className="input email">
+                                <input type="text" value={userName}  placeholder=" " onChange={e => {setUserName(e.target.value)}} />
+                                <label>邮箱</label>
                             </div>
                             <Provider value={passD1}>
                                 <InputP ref={passElOne} label="请输入你的密码" />

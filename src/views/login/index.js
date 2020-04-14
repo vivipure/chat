@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, createContext, useContext, useImperativeHandle, forwardRef } from 'react';
 import { useHistory } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.scss'
 
@@ -71,7 +71,6 @@ function Input(props, ref) {
 
         setPassword(t)
         setDisable(!t.length)
-        
     }
     return (
             <div className="input password" ref={inputEl}>
