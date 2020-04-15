@@ -36,7 +36,6 @@ class MainContent extends Component {
     }
     // 获取群组信息
     getRoomDetail = async () => {
-
         if (this.state.chat_room === 0) return
         await request({
             url: '/group/detail',
@@ -58,6 +57,7 @@ class MainContent extends Component {
         let index = this.state.groupList.findIndex(item => item === this.state.chat_room)
 
         if (index !== -1) {
+            await this.socketStateCheck()
         }else {
             this.startChat()
         }
@@ -175,9 +175,9 @@ class MainContent extends Component {
                 name: this.state.tempUser,
                 room: this.state.chat_room
             },(error) => {
-            if(error) {
-                console.log(error);
-            }
+                if(error) {
+                    console.log(error);
+                }
             })
         }
 
@@ -193,7 +193,11 @@ class MainContent extends Component {
         this.getRoomDetail()
     }
     componentWillUnmount() {
-        
+        this.state.sockets.reduce(async (acc, v) => {
+           await acc
+           await v.socket.close()
+        },undefined)
+        console.log('卸载了全部 的socekt')
     }
     
     render() {

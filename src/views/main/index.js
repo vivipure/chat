@@ -4,7 +4,9 @@ import './index.scss'
 import MainContent from '../maincontent'
 import MainSide from '../mainside'
 import InfoSide from '../infoside'
+import store from '../../store'
 
+import { setChatRoom}  from '../../store/actionType'
 
 
 
@@ -26,6 +28,10 @@ class MainFrame extends Component {
     }
     showContent = () => {
         this.refs.main.getRoomDetail()
+    }
+    componentWillUnmount() {
+        const action = setChatRoom(0)
+        store.dispatch(action)
     }
     render() {
         return (

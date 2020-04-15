@@ -14,6 +14,7 @@ export const changeContentShow = value => ({
     value
 })
 
+// 设置当前群组
 export const setChatRoom = value => ({
     type: Chat_Room,
     value

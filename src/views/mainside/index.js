@@ -29,14 +29,19 @@ class MainSide extends Component {
         }
         store.subscribe(this.storeChange)
     }
+    // 
     showItem = async (id) => {
         if (this.state.mode === 'phone') {
             const action = changeContentShow(true)
             store.dispatch(action)
         }
-        let action = setChatRoom(id)
-        await store.dispatch(action)
-        this.props.showContent()
+        const preId = this.state.chat_room
+        // 查看是否已经打开了当前群组
+        if (id !== preId) {
+            let action = setChatRoom(id)
+            await store.dispatch(action)
+            this.props.showContent()
+        }
     }
     // 组件挂载完成时被执行
     componentDidMount() {
@@ -44,7 +49,6 @@ class MainSide extends Component {
             url: '/group/list',
             method: 'get'
         }).then(res => {
-            
             this.setState({
                 chatitems: res.data
             })
@@ -53,9 +57,6 @@ class MainSide extends Component {
     }
     storeChange = () => {
         this.setState(store.getState())
-    }
-    back = () => {
-        this.props.login()
     }
     timeParse = (time) => {
         if (time === '') {
@@ -75,7 +76,7 @@ class MainSide extends Component {
         return (
                 <aside className="main-side">
                    <header className="common-header">
-                        <div className="common-header-start" onClick={ this.back }>
+                        <div className="common-header-start" onClick={ this.props.login }>
                             <UserBox userName='Admin' avator={img5} type="main" />
                         </div>
                         <nav className="common-nav">

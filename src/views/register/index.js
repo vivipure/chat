@@ -16,7 +16,7 @@ const svgIcon = require('../../icons/loginbackground.svg')
 
 toast.configure({
     osition: "top-center",
-    autoClose: true,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
