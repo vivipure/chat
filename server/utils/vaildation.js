@@ -10,7 +10,6 @@ const registerValidation = (req) => {
     return error
 }
 const loginValidation = (req) => {
-
     const schema = Joi.object({
         email: Joi.string().min(6).required().email(),
         password: Joi.string().min(6).required()

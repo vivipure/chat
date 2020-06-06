@@ -12,9 +12,7 @@ import io from "socket.io-client";
 const img1 = require('../../icons/avator_1.jpg')
 const emptyImg = require("../../icons/onlinechat.svg")
 
-const iteminarray = (item,arr) => {
-    
-}
+
 
 class MainContent extends Component {
     constructor(props) {
@@ -23,8 +21,8 @@ class MainContent extends Component {
             userName: '',
             avator: '',
             chatList: [],
-            sockets: [],
-            groupList:[],
+            sockets: [], //房间ID 和socket实例
+            groupList:[], // 已经连接的房间数
             ...store.getState()
         }
         store.subscribe(this.storeChange)
@@ -39,8 +37,7 @@ class MainContent extends Component {
     }
     // 获取群组信息
     getRoomDetail = async () => {
-
-        if (this.state.chat_room === 0) return
+        if (this.state.chat_room === '') return
         await request({
             url: '/group/detail',
             method: 'post',
@@ -59,7 +56,6 @@ class MainContent extends Component {
         })
         this.refs.messagecontent.scrollToBottom()
         let index = this.state.groupList.findIndex(item => item === this.state.chat_room)
-
         if (index !== -1) {
         }else {
             this.startChat()
@@ -69,7 +65,7 @@ class MainContent extends Component {
     startChat = async () => {
         const socket = await io('http://localhost:52000')
         // 组件保存socket
-        await this.setState({
+        this.setState({
             sockets: this.state.sockets.concat([{
                 groupId: this.state.chat_room,
                 socket: socket
@@ -105,7 +101,6 @@ class MainContent extends Component {
     }
     // 发送信息
     sendMessage = async () => {
-        console.time('message')
         await this.socketStateCheck()
         let content = this.refs.messagebox.innerHTML
         if(content) {
@@ -113,7 +108,6 @@ class MainContent extends Component {
             socket.socket.emit('sendMessage',content)
             this.refs.messagebox.innerHTML = ''
         }
-        console.timeEnd('message')
 
     }
     // 聊天界面
@@ -195,12 +189,16 @@ class MainContent extends Component {
     componentDidMount() {
         this.getRoomDetail()
     }
-    
+    componentWillUnmount() {
+        this.state.sockets.forEach(socket => {
+            socket.socket.close()
+        })
+    }
     render() {
         return (
             <Fragment>
                 {
-                    this.state.mode === 'normal' && this.state.chat_room === 0 ? this.emptyBlock() : this.chatBlock()
+                    this.state.mode === 'normal' && this.state.chat_room === '' ? this.emptyBlock() : this.chatBlock()
                 }
             </Fragment>
            

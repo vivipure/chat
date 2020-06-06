@@ -43,7 +43,6 @@ module.exports =  function ws(io) {
 
         // 断开连接
         socket.on('disconnect', () => {
-          console.log('有位衰仔离开了房间')
           const user = removeUser(socket.id)
           if(user) {
             io.to(user.room).emit('message', { sender: 'system', content: `${user.name} 离开了房间.`,chatTime: new Date() });

@@ -196,7 +196,6 @@ function Register() {
                             </button>
                             <div className="login-bottom" style={{ justifyContent:"flex-end"}}>
                                 <p onClick={login}>已有账号，快去登录</p>
-                                
                             </div>
                         </div>
                     </form>

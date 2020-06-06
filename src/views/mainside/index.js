@@ -10,11 +10,6 @@ import { setChatRoom}  from '../../store/actionType'
 
 import request from '../../utils/request'
 
-// img
-// const img1 = require('../../icons/avator_1.jpg')
-// const img2 = require('../../icons/avator_2.jpg')
-// const img3 = require('../../icons/avator_3.jpg')
-// const img4 = require('../../icons/avator_4.jpg')
 const img5 = require('../../icons/avator_5.jpg')
 
 
@@ -51,6 +46,10 @@ class MainSide extends Component {
         })
 
     }
+    componentWillUnmount() {
+        let action = setChatRoom('')
+        store.dispatch(action)
+    }
     storeChange = () => {
         this.setState(store.getState())
     }
@@ -82,12 +81,12 @@ class MainSide extends Component {
                             <ul className="common-nav-list">
                                 <li className="common-nav-item">
                                     <button className="common-button">
-                                        <span className="icon">🕘</span>
+                                        <span className="icon" role="img" aria-label="time">🕘</span>
                                     </button>
                                 </li>
                                 <li className="common-nav-item">
                                     <button className="common-button" title="清空所有信息">
-                                        <span className="icon icon-status">💬</span>
+                                        <span className="icon icon-status" role="img" aria-label="img">💬</span>
                                     </button>
                                 </li>
                                 <li className="common-nav-item">

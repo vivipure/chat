@@ -14,13 +14,16 @@ class MainFrame extends Component {
         this.state = {
             group: {}
         }
+        console.log(this.props.history)
     }
+    // 展示群组详情
     showInfo= ()=> {
         this.setState({
             group: this.refs.main.state.group
         })
         this.refs.childRef.changeOpen()
     }
+    // 去登陆页
     goLogin = () => {
         this.props.history.push('/login')
     }

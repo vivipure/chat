@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect, createContext, useContext, useImperativeHandle, forwardRef } from 'react';
 import { useHistory } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.scss'
+import request from '../../utils/request'
 
 // 图片引用
 const wave = require('../../icons/wave.png')
@@ -16,8 +17,9 @@ toast.configure({
 const FormContext = createContext()
 const { Provider} = FormContext
 
-// 输入框 hook
-function Input(props, ref) {
+
+// inPut组件
+const InputP = forwardRef((props, ref) => {
     const {
         password,
         setPassword,
@@ -89,7 +91,6 @@ function Input(props, ref) {
                         <use xlinkHref="#line" />
                     </svg>
                 </div>
-                {/* 验证 */}
                 <div className="tick">
                     <svg>
                         <use xlinkHref="#tick" />
@@ -97,9 +98,7 @@ function Input(props, ref) {
                 </div>
             </div>
     )
-}
-// 暴露给父组件
-let InputP = forwardRef(Input)
+})
 // form 组件
 function LoginBox() {
     // state
@@ -165,6 +164,7 @@ function LoginBox() {
                     // 验证部分
                     let cls = password === 'admin' ? 'success' : 'error';
                     login.classList.add(cls);
+                   
                     // 动画部分
                     if (cls === 'error') {
                         setTimeout(() => {
@@ -181,6 +181,16 @@ function LoginBox() {
                     }
                 }, 1500);
             }
+    }
+    function handleLogin() {
+        return request({
+            url: '/user/login',
+            method: 'post',
+            data: {
+                email: userName,
+                password
+            }
+        })
     }
     return (
           <div className="login-container">

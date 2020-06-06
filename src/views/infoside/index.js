@@ -13,7 +13,6 @@ class InfoSide extends Component {
             open: !this.state.open
         })
     }
-    
     render() {
         const {
             groupName,

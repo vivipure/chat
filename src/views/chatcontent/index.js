@@ -44,28 +44,10 @@ class ChatContent extends Component {
                                     )
                                 })
                             }
-
-                            {/* <TextBlock text='This is my CSS/HTML Revers Engineering for WhatsApp' type="you" isSeen={true} time="14:11" />
-                            <TextBlock text='Just take a look' type="you" isSeen={true} time="14:12" />
-                            <TextBlock text='Who are you?' type="other" isSeen={true} time="14:33" />
-                            <TextBlock text={ long } type="you" isSeen={false} time="14:41" />
-                            <TextBlock text="Who's those peoples on the contact list?" type="other" isSeen={true} time="14:43" /> */}
+                            
                         </ol>
                         </div>  
         )
     }
 }
 export default ChatContent
-
-
-     // const long = `
-        // I’m Elad Shechter, a Web Developer specializing in CSS & HTML design and architecture.<br/><br/>
-        // Woking as a CSS Architect and evangelist at <a href="https://animaapp.com" target="_blank">AnimaApp.com</a>.<br/><br/>
-
-        // A bit more about myself:<br/>
-        // - Writer of various globally known CSS articles<br/>
-        // - CSS speaker.<br/>
-        // - Founder of CSS Masters Israel Community<br/><br/>
-
-        // You can see more of my stuff on my website <a href="https://eladsc.com/" tarhet="_blank">eladsc.com</a>
-        // `

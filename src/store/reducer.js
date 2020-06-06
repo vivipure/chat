@@ -2,12 +2,10 @@ const defaultState = {
     // normal, phone
     mode: 'normal',
     contentShow: false,
-    chat_room: 0,
-    tempUser: `user${(Math.random()*1000).toFixed(3)*1000}`
-    // 
+    chat_room: '',
+    tempUser: `user${(Math.random()*1000).toFixed(3)*1000}` //暂时随机生成用户
 }
 // 定义action
-
 export default (state = defaultState, action) => {
     let newS = JSON.parse(JSON.stringify(state))
     if (action.type === 'change_mode') {
